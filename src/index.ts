@@ -1,7 +1,6 @@
 import { Plugin, handleStreamOrSingleExecutionResult } from '@envelop/core';
 import { getOperationName } from './getFromAST';
 import { print } from 'graphql/language/printer';
-import {} from '@envelop/types/typings/hooks';
 import { NetworkObserver } from './NetworkObserver';
 import { HttpObserver } from './observers/httpObserver';
 
@@ -27,14 +26,16 @@ export const useNetworkViewer = (enabled = false, opts?: UseNetworkViewerOpts): 
       observers.forEach((observer) => observer.initialize());
     },
     onExecute({ args }) {
-      observers.forEach((observer) => observer.onExecute());
+      const callbacks = observers.map((observer) => observer.onExecute());
       return {
         onExecuteDone: (payload) => {
           return handleStreamOrSingleExecutionResult(payload, ({ result, setResult }) => {
+            const observations = callbacks.map((callback) => callback());
             // Here you can access result, and modify it with setResult if needed
             logFunction('useNetworkViewer', {
               operationName: getOperationName(args.document),
               document: opts?.logGraphQlDocument ? print(args.document) : undefined,
+              observations,
             });
           });
         },

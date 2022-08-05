@@ -19,18 +19,24 @@ describe('useNetworkViewer', () => {
       const config = { logFunction: jest.fn() };
       const testInstance = createTestkit([useNetworkViewer(true, config)], schema);
       await testInstance.execute(`query test { test }`);
-      expect(config.logFunction).toBeCalledWith('useNetworkViewer', {
-        operationName: 'test',
-      });
+      expect(config.logFunction).toBeCalledWith(
+        'useNetworkViewer',
+        expect.objectContaining({
+          operationName: 'test',
+        }),
+      );
     });
     it('does not log document after operation execution', async () => {
       const config = { logFunction: jest.fn() };
       const testInstance = createTestkit([useNetworkViewer(true, config)], schema);
       await testInstance.execute(`query test { test }`);
-      expect(config.logFunction).toBeCalledWith('useNetworkViewer', {
-        operationName: 'test',
-        document: undefined,
-      });
+      expect(config.logFunction).toBeCalledWith(
+        'useNetworkViewer',
+        expect.objectContaining({
+          operationName: 'test',
+          document: undefined,
+        }),
+      );
     });
   });
 
@@ -39,11 +45,14 @@ describe('useNetworkViewer', () => {
       const config: UseNetworkViewerOpts = { logFunction: jest.fn(), logGraphQlDocument: true };
       const testInstance = createTestkit([useNetworkViewer(true, config)], schema);
       const result = await testInstance.execute(`query test { test }`);
-      expect(config.logFunction).toBeCalledWith('useNetworkViewer', {
-        operationName: 'test',
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        document: expect.stringMatching('query\\s+test\\s+{\\s+test\\s+}'),
-      });
+      expect(config.logFunction).toBeCalledWith(
+        'useNetworkViewer',
+        expect.objectContaining({
+          operationName: 'test',
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          document: expect.stringMatching('query\\s+test\\s+{\\s+test\\s+}'),
+        }),
+      );
     });
   });
 });
