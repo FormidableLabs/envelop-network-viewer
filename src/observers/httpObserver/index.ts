@@ -18,13 +18,13 @@ export class HttpObserver implements NetworkObserver {
     override(http, this.emitter);
     override(https, this.emitter);
   }
+
   onExecute() {
     const listener = new ExecutionListener();
     listener.bind(this.emitter);
     return () => {
       // done
       listener.unbind(this.emitter);
-
       return listener.report();
     };
   }

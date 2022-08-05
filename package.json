@@ -24,6 +24,7 @@
     "husky": "^8.0.1",
     "install-peers-cli": "^2.2.0",
     "jest": "^28.1.3",
+    "jest-expect-json": "^0.1.1",
     "prettier": "^2.7.1",
     "semantic-release": "^19.0.3",
     "stubby": "^5.1.0",

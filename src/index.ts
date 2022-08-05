@@ -32,11 +32,18 @@ export const useNetworkViewer = (enabled = false, opts?: UseNetworkViewerOpts): 
           return handleStreamOrSingleExecutionResult(payload, ({ result, setResult }) => {
             const observations = callbacks.map((callback) => callback());
             // Here you can access result, and modify it with setResult if needed
-            logFunction('useNetworkViewer', {
-              operationName: getOperationName(args.document),
-              document: opts?.logGraphQlDocument ? print(args.document) : undefined,
-              observations,
-            });
+            logFunction(
+              'useNetworkViewer',
+              JSON.stringify(
+                {
+                  operationName: getOperationName(args.document),
+                  document: opts?.logGraphQlDocument ? print(args.document) : undefined,
+                  observations,
+                },
+                null,
+                0,
+              ),
+            );
           });
         },
       };

@@ -25,8 +25,6 @@ type TestCases = Array<
 
 describe('httpObserver/override', () => {
   const emitter = new EventEmitter();
-  override(http, emitter);
-  override(https, emitter);
 
   const tests: TestCases = [
     [
@@ -135,6 +133,12 @@ describe('httpObserver/override', () => {
       done();
     });
   }, 1000);
+
+  beforeEach(() => {
+    jest.resetModules();
+    override(http, emitter);
+    override(https, emitter);
+  });
 
   tests.forEach((test) => {
     const scenario = test[0];

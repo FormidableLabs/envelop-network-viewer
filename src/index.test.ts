@@ -1,6 +1,7 @@
 import { createTestkit } from '@envelop/testing';
 import { useNetworkViewer, UseNetworkViewerOpts } from './index';
 import { makeExecutableSchema } from '@graphql-tools/schema';
+import 'jest-expect-json';
 
 describe('useNetworkViewer', () => {
   const schema = makeExecutableSchema({
@@ -13,6 +14,7 @@ describe('useNetworkViewer', () => {
       },
     },
   });
+  beforeEach(() => jest.resetModules());
 
   describe('default configuration', () => {
     it('logs operationName after operation execution', async () => {
@@ -21,7 +23,7 @@ describe('useNetworkViewer', () => {
       await testInstance.execute(`query test { test }`);
       expect(config.logFunction).toBeCalledWith(
         'useNetworkViewer',
-        expect.objectContaining({
+        expect.jsonContaining({
           operationName: 'test',
         }),
       );
@@ -32,10 +34,7 @@ describe('useNetworkViewer', () => {
       await testInstance.execute(`query test { test }`);
       expect(config.logFunction).toBeCalledWith(
         'useNetworkViewer',
-        expect.objectContaining({
-          operationName: 'test',
-          document: undefined,
-        }),
+        expect.not.stringMatching('query\\s+test\\s+{\\s+test\\s+}'),
       );
     });
   });
@@ -47,7 +46,7 @@ describe('useNetworkViewer', () => {
       const result = await testInstance.execute(`query test { test }`);
       expect(config.logFunction).toBeCalledWith(
         'useNetworkViewer',
-        expect.objectContaining({
+        expect.jsonContaining({
           operationName: 'test',
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           document: expect.stringMatching('query\\s+test\\s+{\\s+test\\s+}'),

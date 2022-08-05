@@ -90,8 +90,8 @@ export function override(module: typeof http | typeof https, emitter: EventEmitt
     // @ts-ignore
     const req = original.apply(this, args);
 
-    req.on('response', (response: http.IncomingMessage) => {
-      response.on('end', () => {
+    req.once('response', (response: http.IncomingMessage) => {
+      response.once('end', () => {
         const res = {
           connectionID,
           time: Date.now(),
@@ -103,7 +103,7 @@ export function override(module: typeof http | typeof https, emitter: EventEmitt
         emitter.emit(EVENT_RESPONSE, res);
       });
     });
-    req.on('close', () => {
+    req.once('finish', () => {
       const options = requestOptions(...args);
       const log = {
         connectionID,
@@ -119,6 +119,7 @@ export function override(module: typeof http | typeof https, emitter: EventEmitt
     return req;
   }
 
+  wrapper.original = original;
   // @ts-ignore
   module.request = wrapper;
 }
