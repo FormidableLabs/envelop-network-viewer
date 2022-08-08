@@ -66,9 +66,13 @@ class ExecutionListener {
     const calls = Object.keys(this.data).length;
     const hosts = Object.entries(this.data).map(([key, value]) => value.host);
     const requests = Object.entries(this.data).map(([key, value]) => {
-      const request: DeepPartial<RequestDetails> = value;
+      const request: DeepPartial<RequestDetails> & { duration_ms?: number } = value;
       delete request.connectionID;
       delete request.response?.connectionID;
+      request.duration_ms =
+        request.response?.time && request?.time
+          ? request.response?.time - request?.time
+          : undefined;
       return request;
     });
     return { label: 'HTTP/HTTPS', data: { calls, hosts, requests } };
