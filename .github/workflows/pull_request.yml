@@ -21,10 +21,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - name: Typescript Build
-        run: yarn build
       - uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           test-script: yarn test
