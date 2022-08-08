@@ -1,13 +1,12 @@
 {
   "name": "envelop-network-viewer",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A GraphQL Envelop plugin for providing visibility into your GraphQL operation network activity.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@github.com:FormidableLabs/envelop-network-viewer.git",
   "author": "Jeremy Giberson <jeremy.giberson@formidable.com>",
   "license": "MIT",
-  "private": false,
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
@@ -49,9 +48,6 @@
     "prepare": "install-peers",
     "semantic-release": "semantic-release",
     "test": "jest"
-  },
-  "publishConfig": {
-    "access": "restricted"
   },
   "release": {
     "branches": [
