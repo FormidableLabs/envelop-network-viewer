@@ -5,7 +5,7 @@ developers want some insight into how heavy specific GraphQL operations are in o
 candidates. Below is an example of possible log output of the plugin:
 
 ```
-useNetworkViewer {"operationName":"test","document":"query test {\n  test\n}","observations":[{"label":"HTTP/HTTPS","data":{"requests":1,"hosts":["localhost"]}}]}
+useNetworkViewer {"operationName":"test","document":"query test {\n  test\n}","observations":[{"label":"HTTP/HTTPS","data":{"calls":1,"hosts":["localhost"],"requests":[{"time":1659986144633,"method":"GET","host":"localhost","port":"8883","headers":{},"response":{"time":1659986144636,"httpVersion":"1.1","statusCode":200,"headers":{"server":"stubby/5.1.0 node/v14.19.3 (darwin arm64)","x-stubby-resource-id":"1","date":"Mon, 08 Aug 2022 19:15:44 GMT","connection":"close","transfer-encoding":"chunked"},"statusMessage":"OK"},"duration_ms":3}]}}]}
 ```
 
 Keep in mind, that this is an investigative tool that can have a heavy impact on your logs. It should only be turned on 
@@ -43,7 +43,7 @@ Below is a list of configuration properties and what they do
 
 ## Todo
 - [x] HTTP/HTTPS observer
-- [ ] Support extending w/ new observers
+- [x] Support extending w/ new observers
+- [x] document plugin install / usage
 - [ ] review https://github.com/nock/nock ClientRequest override to support HTTP calls that use this class
-- [ ] document plugin install / usage
 - [ ] document plugin design for dev support
