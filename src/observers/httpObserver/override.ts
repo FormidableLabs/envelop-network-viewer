@@ -7,6 +7,7 @@ export const EVENT_REQUEST = 'request';
 export const EVENT_RESPONSE = 'response';
 export type RequestEventArgs = {
   connectionID: string;
+  time: number;
   method: string;
   host: string;
   port: string;

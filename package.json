@@ -2,7 +2,8 @@
   "name": "envelop-network-viewer",
   "version": "0.0.0-development",
   "description": "A GraphQL Envelop plugin for providing visibility into your GraphQL operation network activity.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:FormidableLabs/envelop-network-viewer.git",
   "author": "Jeremy Giberson <jeremy.giberson@formidable.com>",
   "license": "MIT",
@@ -12,6 +13,11 @@
     "@commitlint/config-conventional": "^17.0.3",
     "@envelop/testing": "^4.4.1",
     "@graphql-tools/schema": "^8.5.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.5",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
     "@tsconfig/node12": "^1.0.11",
     "@types/jest": "^28.1.6",
     "@types/stubby": "^4.1.1",
@@ -46,5 +52,39 @@
   },
   "publishConfig": {
     "access": "restricted"
+  },
+  "release": {
+    "branches": [
+      "main",
+      {
+        "name": "rc",
+        "prerelease": true
+      }
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
   }
 }
