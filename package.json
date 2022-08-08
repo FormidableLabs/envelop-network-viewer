@@ -1,6 +1,6 @@
 {
   "name": "@jeremygiberson/envelop-network-viewer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A GraphQL Envelop plugin for providing visibility into your GraphQL operation network activity.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
