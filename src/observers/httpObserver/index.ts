@@ -9,6 +9,7 @@ import {
   RequestEventArgs,
   ResponseEventArgs,
 } from './override';
+import { DeepPartial } from '../../deepPartial';
 
 export type HttpObserverConfig = {};
 
@@ -62,8 +63,14 @@ class ExecutionListener {
   }
 
   report(): ExecuteDoneReport {
-    const requests = Object.keys(this.data).length;
+    const calls = Object.keys(this.data).length;
     const hosts = Object.entries(this.data).map(([key, value]) => value.host);
-    return { label: 'HTTP/HTTPS', data: { requests, hosts } };
+    const requests = Object.entries(this.data).map(([key, value]) => {
+      const request: DeepPartial<RequestDetails> = value;
+      delete request.connectionID;
+      delete request.response?.connectionID;
+      return request;
+    });
+    return { label: 'HTTP/HTTPS', data: { calls, hosts, requests } };
   }
 }
