@@ -1,4 +1,9 @@
 # envelop-network-viewer
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=FormidableLabs_envelop-network-viewer&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=FormidableLabs_envelop-network-viewer)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=FormidableLabs_envelop-network-viewer&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=FormidableLabs_envelop-network-viewer)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=FormidableLabs_envelop-network-viewer&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=FormidableLabs_envelop-network-viewer)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=FormidableLabs_envelop-network-viewer&metric=coverage)](https://sonarcloud.io/summary/new_code?id=FormidableLabs_envelop-network-viewer)
+
 This plugin is designed to provide visibility into how many/what network requests are made by your GraphQL Operations. 
 This tool is primarily targeted for existing graphql projects that have grown large and complex with integrations and 
 developers want some insight into how heavy specific GraphQL operations are in order to identify cache or optimization 
