@@ -1,6 +1,6 @@
 import http from 'http';
 import https from 'https';
-import { ExecuteDoneReport, NetworkObserver } from '../../NetworkObserver';
+import { ExecuteArgs, ExecuteDoneReport, NetworkObserver } from '../../NetworkObserver';
 import EventEmitter from 'events';
 import {
   EVENT_REQUEST,
@@ -10,6 +10,7 @@ import {
   ResponseEventArgs,
 } from './override';
 import { DeepPartial } from '../../deepPartial';
+import { ContextTest } from '../../fauxClsHooked';
 
 export type HttpObserverConfig = {};
 
@@ -20,8 +21,8 @@ export class HttpObserver implements NetworkObserver {
     override(https, this.emitter);
   }
 
-  onExecute() {
-    const listener = new ExecutionListener();
+  onExecute(args: ExecuteArgs) {
+    const listener = new ExecutionListener(args.contextTest);
     listener.bind(this.emitter);
     return () => {
       // done
@@ -40,7 +41,10 @@ type RequestDetails = RequestEventArgs & {
 };
 
 class ExecutionListener {
-  constructor(private data: Record<string, RequestDetails> = {}) {}
+  constructor(
+    private contextTest: ContextTest,
+    private data: Record<string, RequestDetails> = {},
+  ) {}
 
   bind(emitter: EventEmitter) {
     emitter.addListener(EVENT_REQUEST, this.handleRequestEvent.bind(this));
@@ -53,10 +57,16 @@ class ExecutionListener {
   }
 
   handleRequestEvent(event: RequestEventArgs) {
+    if (!this.contextTest.isTargetContext()) {
+      return;
+    }
     this.data[event.connectionID] = event;
   }
 
   handleResponseEvent(event: ResponseEventArgs) {
+    if (!this.contextTest.isTargetContext()) {
+      return;
+    }
     if (this.data[event.connectionID]) {
       this.data[event.connectionID].response = event;
     }

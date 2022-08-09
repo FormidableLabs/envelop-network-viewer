@@ -112,7 +112,7 @@ export function override(module: typeof http | typeof https, emitter: EventEmitt
         method: options.method || 'GET',
         host: options.hostname || options.host,
         port: options.port,
-        path: options.path,
+        path: options.path || options.pathname,
         headers: options.headers || {},
       };
       emitter.emit(EVENT_REQUEST, log);
