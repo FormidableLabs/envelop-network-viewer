@@ -54,6 +54,9 @@ Prettified output:
 Keep in mind, that this is an investigative tool that can have a heavy impact on your logs. It should only be turned on 
 for explicit data collection activities.
 
+### Concurrency Caveat
+This plugin currently does not support concurrent operations. That is, it only works in a lambda like environment where the node
+process will only be handling one request at a time. A feature for concurrent operation support is planned.
 
 ## Usage
 Add the useNetworkViewer plugin to your envelop configuration. Note the constructor takes two parameters:
@@ -85,6 +88,4 @@ Below is a list of configuration properties and what they do
 
 
 ## Todo
-- [x] HTTP/HTTPS observer
-- [x] Support extending w/ new observers
-- [x] document plugin install / usage
+- [ ] Support concurrent requests
