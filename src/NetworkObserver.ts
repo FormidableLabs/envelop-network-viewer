@@ -2,7 +2,7 @@ import { ContextTest } from './fauxClsHooked';
 
 export type ExecuteDoneReport = {
   label: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 };
 export type OnExecuteDoneCallback = () => ExecuteDoneReport;
 

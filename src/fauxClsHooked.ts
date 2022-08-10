@@ -7,7 +7,7 @@ export type Namespaceish = Pick<Namespace, 'run' | 'get' | 'set' | 'bind'>;
  * It allows the plugin implementation to have the same interface when supporting concurrency or not
  */
 class FauxNamespace implements Namespaceish {
-  constructor(private name: string, private data: Record<string, any> = {}) {}
+  constructor(private name: string, private data: Record<string, unknown> = {}) {}
   get(key: string): unknown {
     return this.data[key];
   }
@@ -21,7 +21,7 @@ class FauxNamespace implements Namespaceish {
     return this.data[key] as T;
   }
 
-  bind<F>(fn: F, context: any): F {
+  bind<F>(fn: F, _context: unknown): F {
     return fn;
   }
 }

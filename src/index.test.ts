@@ -43,7 +43,7 @@ describe('useNetworkViewer', () => {
     it('logGraphQlDocument:true - logs document after operation execution', async () => {
       const config: UseNetworkViewerOpts = { logFunction: jest.fn(), logGraphQlDocument: true };
       const testInstance = createTestkit([useNetworkViewer(true, config)], schema);
-      const result = await testInstance.execute(`query test { test }`);
+      await testInstance.execute(`query test { test }`);
       expect(config.logFunction).toBeCalledWith(
         'useNetworkViewer',
         expect.jsonContaining({

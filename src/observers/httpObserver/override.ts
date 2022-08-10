@@ -13,7 +13,7 @@ export type RequestEventArgs = {
   host: string;
   port: string;
   path?: string;
-  headers: Record<string, any>;
+  headers: Record<string, unknown>;
 };
 
 export type ResponseEventArgs = {

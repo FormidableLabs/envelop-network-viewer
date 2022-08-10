@@ -124,7 +124,7 @@ describe('httpObserver/override', () => {
         ],
       },
       (err) => {
-        done();
+        done(err);
       },
     );
   }, 100);
@@ -171,8 +171,9 @@ describe('httpObserver/override', () => {
 
         req.on('response', (response) => {
           // data must be consumed for end event to fire
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          response.on('data', (_chunk) => {});
+          response.on('data', (_chunk) => {
+            return _chunk;
+          });
         });
         req.end();
       }, 1000);

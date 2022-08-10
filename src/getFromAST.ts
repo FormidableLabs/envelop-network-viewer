@@ -6,6 +6,6 @@ export function getOperationName(doc: DocumentNode): string | null {
     doc.definitions
       .filter((definition) => definition.kind === 'OperationDefinition' && definition.name)
       // @ts-ignore
-      .map((x: OperationDefinitionNode) => x.name!.value)[0] || null
+      .map((x: OperationDefinitionNode) => x.name?.value)[0] || null
   );
 }

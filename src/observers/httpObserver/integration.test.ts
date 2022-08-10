@@ -64,7 +64,7 @@ describe('httpObserver', () => {
         ],
       },
       (err) => {
-        done();
+        done(err);
       },
     );
   }, 100);
@@ -82,7 +82,7 @@ describe('httpObserver', () => {
         logGraphQlDocument: true,
       };
       const testInstance = createTestkit([useNetworkViewer(true, config)], schema);
-      const result = await testInstance.execute(`query test { test }`);
+      await testInstance.execute(`query test { test }`);
       expect(config.logFunction).toBeCalledWith(
         'useNetworkViewer',
         expect.jsonContaining({
@@ -101,7 +101,7 @@ describe('httpObserver', () => {
         enableConcurrencySupport: true,
       };
       const testInstance = createTestkit([useNetworkViewer(true, config)], schema);
-      const results = await Promise.all([
+      await Promise.all([
         testInstance.execute(`query test { test2 }`),
         testInstance.execute(`query test2 { test3 }`),
       ]);

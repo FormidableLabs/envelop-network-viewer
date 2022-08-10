@@ -9,7 +9,7 @@ import { v4 } from 'uuid';
 import { ExecutionArgs } from 'graphql';
 
 export type UseNetworkViewerOpts = {
-  logFunction?: (message?: any, ...optionalParams: any[]) => void;
+  logFunction?: (message?: unknown, ...optionalParams: unknown[]) => void;
   logGraphQlDocument?: boolean;
   additionalObservers?: Array<NetworkObserver>;
   enableConcurrencySupport?: boolean;
@@ -46,9 +46,8 @@ export const useNetworkViewer = (enabled = false, opts?: UseNetworkViewerOpts): 
       setExecuteFn(namespace.bind(clsExecuteFn));
       return {
         onExecuteDone: (payload) => {
-          return handleStreamOrSingleExecutionResult(payload, ({ result, setResult }) => {
+          return handleStreamOrSingleExecutionResult(payload, () => {
             const observations = callbacks.map((callback) => callback());
-            // Here you can access result, and modify it with setResult if needed
             logFunction(
               'useNetworkViewer',
               JSON.stringify(

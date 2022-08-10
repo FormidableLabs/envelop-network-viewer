@@ -77,8 +77,8 @@ export class ExecutionListener {
 
   report(): ExecuteDoneReport {
     const calls = Object.keys(this.data).length;
-    const hosts = Array.from(new Set(Object.entries(this.data).map(([key, value]) => value.host)));
-    const requests = Object.entries(this.data).map(([key, value]) => {
+    const hosts = Array.from(new Set(Object.entries(this.data).map(([_key, value]) => value.host)));
+    const requests = Object.entries(this.data).map(([_key, value]) => {
       const request: DeepPartial<RequestDetails> & { duration_ms?: number } = value;
       delete request.connectionID;
       delete request.response?.connectionID;
