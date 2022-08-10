@@ -12,8 +12,6 @@ import {
 import { DeepPartial } from '../../deepPartial';
 import { ContextTest } from '../../fauxClsHooked';
 
-export type HttpObserverConfig = {};
-
 export class HttpObserver implements NetworkObserver {
   constructor(private emitter: EventEmitter = new EventEmitter()) {}
   initialize() {
@@ -40,7 +38,7 @@ type RequestDetails = RequestEventArgs & {
   response?: ResponseEventArgs;
 };
 
-class ExecutionListener {
+export class ExecutionListener {
   constructor(
     private contextTest: ContextTest,
     private data: Record<string, RequestDetails> = {},
@@ -54,6 +52,11 @@ class ExecutionListener {
   unbind(emitter: EventEmitter) {
     emitter.removeListener(EVENT_REQUEST, this.handleRequestEvent.bind(this));
     emitter.removeListener(EVENT_RESPONSE, this.handleResponseEvent.bind(this));
+  }
+
+  /** used only for testing **/
+  _getData() {
+    return this.data;
   }
 
   handleRequestEvent(event: RequestEventArgs) {
@@ -74,7 +77,7 @@ class ExecutionListener {
 
   report(): ExecuteDoneReport {
     const calls = Object.keys(this.data).length;
-    const hosts = Object.entries(this.data).map(([key, value]) => value.host);
+    const hosts = Array.from(new Set(Object.entries(this.data).map(([key, value]) => value.host)));
     const requests = Object.entries(this.data).map(([key, value]) => {
       const request: DeepPartial<RequestDetails> & { duration_ms?: number } = value;
       delete request.connectionID;

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*.ts", "jest.config.js"],
   "exclude": ["node_modules", "dist", "src/**/*.spec.ts"]

@@ -26,7 +26,6 @@ export const useNetworkViewer = (enabled = false, opts?: UseNetworkViewerOpts): 
     ...(opts?.additionalObservers || []),
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const namespace: Namespaceish = opts?.enableConcurrencySupport
     ? createNamespace('envelop-network-viewer')
     : fauxCreateNamespace('envelop-network-viewer');
@@ -37,7 +36,7 @@ export const useNetworkViewer = (enabled = false, opts?: UseNetworkViewerOpts): 
     },
     onExecute({ executeFn, setExecuteFn, args }) {
       let callbacks: Array<OnExecuteDoneCallback> = [];
-      const id = v4() as string;
+      const id = v4();
       function clsExecuteFn(args: ExecutionArgs) {
         namespace.set('id', id);
         const contextTest = new ContextTest(id, namespace);

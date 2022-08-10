@@ -171,6 +171,7 @@ describe('httpObserver/override', () => {
 
         req.on('response', (response) => {
           // data must be consumed for end event to fire
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           response.on('data', (_chunk) => {});
         });
         req.end();
