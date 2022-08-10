@@ -65,7 +65,7 @@ describe('httpObserver/requestOptions', () => {
     const failureCases: Array<FailureCase> = [
       [
         'should throw if first parameter is not a url or options',
-        [() => {}],
+        [() => 'no-op'],
         'First parameter should be the url, or options object.',
       ],
       [
