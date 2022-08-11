@@ -94,6 +94,27 @@ Below is a list of configuration properties and what they do
 | enableConcurrencySupport | false | Support concurrent requests |
 
 
+## Additional Observers
+These additional observers aren't included by default. They are purpose specific observers that will only be applicable to some app stacks.
 
-## Todo
-- [ ] Support concurrent requests
+### Prisma Client
+If your application uses Prisma, you'll want to include the `PrismaObserver` in your configuration of the plugin. 
+The prisma client observer provides observations for your database interactions using the prisma client.
+
+#### Usage
+You'll need to initialize the prisma client and pass it as a parameter when instantiating the `PrismaObserver`. 
+Then pass the `PrismaObserver` instance in the `additionalObservers` configuration.   
+
+```typescript
+const prisma = new PrismaClient()
+
+const useNetworkViewerConfig = {
+    additionalObservers: [new PrismaObserver(prisma)]
+};
+
+const getEnveloped = envelop({
+  plugins: [
+    useNetworkViewer(true, useNetworkViewerConfig)
+  ]
+})
+```

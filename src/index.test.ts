@@ -54,4 +54,20 @@ describe('useNetworkViewer', () => {
       );
     });
   });
+
+  it('filters null observations', async () => {
+    const config = { logFunction: jest.fn() };
+    const testInstance = createTestkit([useNetworkViewer(true, config)], schema);
+    await testInstance.execute(`query test { test }`);
+    expect(config.logFunction).toBeCalledWith(
+      'useNetworkViewer',
+      expect.jsonContaining({
+        operationName: 'test',
+      }),
+    );
+    expect(config.logFunction).toBeCalledWith(
+      'useNetworkViewer',
+      expect.not.stringMatching('null'),
+    );
+  });
 });

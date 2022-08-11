@@ -89,5 +89,8 @@
     "@types/nanoid": "^3.0.0",
     "cls-hooked": "^4.2.2",
     "uuid": "^8.3.2"
+  },
+  "optionalDependencies": {
+    "@prisma/client": "^4.2.1"
   }
 }

@@ -47,7 +47,9 @@ export const useNetworkViewer = (enabled = false, opts?: UseNetworkViewerOpts): 
       return {
         onExecuteDone: (payload) => {
           return handleStreamOrSingleExecutionResult(payload, () => {
-            const observations = callbacks.map((callback) => callback());
+            const observations = callbacks
+              .map((callback) => callback())
+              .filter((observation) => observation);
             logFunction(
               'useNetworkViewer',
               JSON.stringify(
