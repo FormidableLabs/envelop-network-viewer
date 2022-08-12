@@ -21,6 +21,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+      - run: yarn prisma generate
       - uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           test-script: yarn test
