@@ -48,6 +48,7 @@
     "lint": "eslint --ext .ts ./src --fix",
     "prebuild": "yarn clean",
     "prepare": "install-peers",
+    "prisma": "prisma",
     "semantic-release": "semantic-release",
     "test": "jest"
   },
