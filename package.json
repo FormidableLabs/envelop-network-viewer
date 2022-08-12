@@ -40,7 +40,9 @@
   },
   "peerDependencies": {
     "@envelop/core": "^2.4.1",
-    "graphql": "^16.5.0"
+    "@prisma/client": "^4.2.1",
+    "graphql": "^16.5.0",
+    "prisma": "^4.2.1"
   },
   "scripts": {
     "build": "tsc",
@@ -48,6 +50,7 @@
     "lint": "eslint --ext .ts ./src --fix",
     "prebuild": "yarn clean",
     "prepare": "install-peers",
+    "prisma": "prisma",
     "semantic-release": "semantic-release",
     "test": "jest"
   },

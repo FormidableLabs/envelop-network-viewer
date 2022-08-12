@@ -98,5 +98,18 @@ describe('httpObserver/index', () => {
         }),
       );
     });
+    it('does not report if events were not collected', () => {
+      const targetId = v4();
+      const namespace = createNamespace('faux');
+      const contextTest = new ContextTest(targetId, namespace);
+      const emitter = new EventEmitter();
+      const listener = new ExecutionListener(contextTest);
+      listener.bind(emitter);
+
+      namespace.set('id', targetId);
+
+      const report = listener.report();
+      expect(report).toBe(null);
+    });
   });
 });

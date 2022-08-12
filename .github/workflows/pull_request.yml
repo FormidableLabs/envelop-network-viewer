@@ -21,11 +21,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          test-script: yarn test
+      - run: yarn install
+      - run: yarn prisma generate
+      - run: yarn test
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          test-script: yarn test
