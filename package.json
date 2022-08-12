@@ -40,7 +40,9 @@
   },
   "peerDependencies": {
     "@envelop/core": "^2.4.1",
-    "graphql": "^16.5.0"
+    "@prisma/client": "^4.2.1",
+    "graphql": "^16.5.0",
+    "prisma": "^4.2.1"
   },
   "scripts": {
     "build": "tsc",
@@ -90,8 +92,5 @@
     "@types/nanoid": "^3.0.0",
     "cls-hooked": "^4.2.2",
     "uuid": "^8.3.2"
-  },
-  "optionalDependencies": {
-    "@prisma/client": "^4.2.1"
   }
 }
