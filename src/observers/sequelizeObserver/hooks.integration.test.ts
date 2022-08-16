@@ -46,7 +46,7 @@ describe('sequelizeObserver/hooks/integration', () => {
         options: expect.objectContaining({
           dialect: 'sqlite',
           type: 'INSERT',
-          bind: expect.arrayContaining(['Jane', 'Austen', '1776-01-16 07:28:18.000 +00:00']),
+          bind: expect.arrayContaining(['Jane', 'Austen']),
         }),
       }),
     );
