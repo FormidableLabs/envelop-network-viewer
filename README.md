@@ -97,7 +97,7 @@ Below is a list of configuration properties and what they do
 ## Additional Observers
 These additional observers aren't included by default. They are purpose specific observers that will only be applicable to some app stacks.
 
-### Prisma Client
+### Prisma Observer
 If your application uses Prisma, you'll want to include the `PrismaObserver` in your configuration of the plugin. 
 The prisma client observer provides observations for your database interactions using the prisma client.
 
@@ -110,6 +110,28 @@ const prisma = new PrismaClient()
 
 const useNetworkViewerConfig = {
     additionalObservers: [new PrismaObserver(prisma)]
+};
+
+const getEnveloped = envelop({
+  plugins: [
+    useNetworkViewer(true, useNetworkViewerConfig)
+  ]
+})
+```
+
+### Sequelize Observer
+If your application uses Sequelize, you'll want to include the `SequelizeObserver` in your configuration of the plugin. 
+The sequelize observer provides observations for your database interactions using the sequelize client.
+
+#### Usage
+You'll need to initialize the sequelize client and pass it as a parameter when instantiating the `SequelizeObserver`. 
+Then pass the `SequelizeObserver` instance in the `additionalObservers` configuration.   
+
+```typescript
+const sequelize = new Sequelize('sqlite::memory:');
+
+const useNetworkViewerConfig = {
+    additionalObservers: [new SequelizeObserver(sequelize)]
 };
 
 const getEnveloped = envelop({
