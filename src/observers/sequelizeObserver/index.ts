@@ -13,9 +13,10 @@ export class SequelizeObserver implements NetworkObserver {
   constructor(
     private readonly sequelize: Sequelize,
     private emitter: EventEmitter = new EventEmitter(),
+    private hooks?: Hooks,
   ) {}
   initialize(): void {
-    new Hooks(this.sequelize, this.emitter);
+    this.hooks = new Hooks(this.sequelize, this.emitter);
   }
 
   onExecute({ contextTest }: ExecuteArgs): OnExecuteDoneCallback {
