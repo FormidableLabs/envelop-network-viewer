@@ -1,12 +1,25 @@
-import { makeExecutableSchema } from '@graphql-tools/schema';
 import { useNetworkViewer, UseNetworkViewerOpts } from '../../useNetworkViewer';
-import { PrismaObserver } from './index';
-import { PrismaClient } from '@prisma/client';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import { createTestkit } from '@envelop/testing';
 import 'jest-expect-json';
+import Knex from 'knex';
+import { KnexObserver } from './index';
 
-describe('prismaObserver/integration', () => {
-  const prisma = new PrismaClient();
+interface Author {
+  id: number;
+  first_name: string;
+  last_name: string;
+}
+
+describe('knexObserver/integration', () => {
+  const knex = Knex({
+    client: 'sqlite3',
+    connection: {
+      filename: ':memory:',
+    },
+    useNullAsDefault: true,
+  });
+
   const schema = makeExecutableSchema({
     typeDefs: [
       `type Author { firstName: String! lastName: String! }`,
@@ -17,41 +30,40 @@ describe('prismaObserver/integration', () => {
       Query: {
         authors: async () => {
           return new Promise((resolve) => {
-            setTimeout(() => resolve(prisma.author.findMany()), 5);
+            setTimeout(() => resolve(knex<Author>('authors')), 5);
           });
         },
         author: async (_parent, args: { id: number }) => {
           return new Promise((resolve) => {
-            setTimeout(
-              () =>
-                resolve(
-                  prisma.author.findUnique({
-                    where: {
-                      id: args.id,
-                    },
-                  }),
-                ),
-              5,
-            );
+            setTimeout(() => resolve(knex<Author>('authors').where('id', args.id)), 5);
           });
         },
       },
     },
   });
 
-  beforeEach(() => jest.resetModules());
-  afterEach(async () => {
-    return prisma.$disconnect();
+  beforeAll(async () => {
+    await knex.raw(
+      `CREATE TABLE authors (contact_id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT NOT NULL, last_name TEXT NOT NULL);`,
+    );
+    await knex<Author>('authors').insert({
+      first_name: 'Brandon',
+      last_name: 'sanderson',
+    });
+  });
+  afterAll(async () => {
+    await knex.destroy();
   });
 
-  it('includes prisma observations in log message', async () => {
+  it('includes knex observations in log message', async () => {
     const config: UseNetworkViewerOpts = {
       logFunction: jest.fn(),
       logGraphQlDocument: true,
-      additionalObservers: [new PrismaObserver(prisma)],
+      additionalObservers: [new KnexObserver(knex)],
     };
     const testInstance = createTestkit([useNetworkViewer(true, config)], schema);
     await testInstance.execute(`query authors { authors { firstName lastName } }`);
+
     expect(config.logFunction).toBeCalledWith(
       'useNetworkViewer',
       expect.jsonContaining({
@@ -61,7 +73,7 @@ describe('prismaObserver/integration', () => {
           'query\\s+authors\\s+{\\s+authors\\s+{\\s+firstName\\s+lastName\\s+}\\s+}',
         ),
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        observations: expect.arrayContaining([expect.objectContaining({ label: 'PRISMA' })]),
+        observations: expect.arrayContaining([expect.objectContaining({ label: 'KNEX' })]),
       }),
     );
   });
@@ -69,7 +81,7 @@ describe('prismaObserver/integration', () => {
     const config: UseNetworkViewerOpts = {
       logFunction: jest.fn(),
       logGraphQlDocument: true,
-      additionalObservers: [new PrismaObserver(prisma)],
+      additionalObservers: [new KnexObserver(knex)],
     };
     const testInstance = createTestkit([useNetworkViewer(true, config)], schema);
     await testInstance.execute(`query author { author(id: 1) { firstName lastName } }`);
@@ -77,23 +89,23 @@ describe('prismaObserver/integration', () => {
     expect(config.logFunction).toHaveBeenCalledTimes(2);
     expect(config.logFunction).toBeCalledWith(
       'useNetworkViewer',
-      expect.stringMatching(`"args":{"where":{"id":"1"}}.*"action":"findUnique","model":"Author"`),
+      expect.stringMatching('select \\* from `authors`'),
     );
     expect(config.logFunction).toBeCalledWith(
       'useNetworkViewer',
-      expect.stringMatching(`"action":"findMany","model":"Author"`),
+      expect.stringMatching('select \\* from `authors` where `id` = ?'),
     );
     // make sure these do not occur together
     expect(config.logFunction).toBeCalledWith(
       'useNetworkViewer',
       expect.not.stringMatching(
-        `"action":"findUnique","model":"Author".*"action":"findMany","model":"Author"`,
+        `select \\* from \`authors\`.*select \\* from \`authors\` where \`id\` = ?`,
       ),
     );
     expect(config.logFunction).toBeCalledWith(
       'useNetworkViewer',
       expect.not.stringMatching(
-        `"action":"findMany","model":"Author".*"action":"findUnique","model":"Author"`,
+        `select \\* from \`authors\` where \`id\` = ?.*select \\* from \`authors\``,
       ),
     );
   });

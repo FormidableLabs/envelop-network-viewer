@@ -1,5 +1,5 @@
 import { createTestkit } from '@envelop/testing';
-import { useNetworkViewer, UseNetworkViewerOpts } from './index';
+import { useNetworkViewer, UseNetworkViewerOpts } from './useNetworkViewer';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import 'jest-expect-json';
 

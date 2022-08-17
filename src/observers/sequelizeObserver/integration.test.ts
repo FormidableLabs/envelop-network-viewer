@@ -1,5 +1,5 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from 'sequelize';
-import { useNetworkViewer, UseNetworkViewerOpts } from '../../index';
+import { useNetworkViewer, UseNetworkViewerOpts } from '../../useNetworkViewer';
 import { SequelizeObserver } from './index';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { createTestkit } from '@envelop/testing';

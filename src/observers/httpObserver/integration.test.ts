@@ -1,7 +1,7 @@
 import { createTestkit } from '@envelop/testing';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { Stubby } from 'stubby';
-import { useNetworkViewer, UseNetworkViewerOpts } from '../../index';
+import { useNetworkViewer, UseNetworkViewerOpts } from '../../useNetworkViewer';
 import http from 'http';
 import 'jest-expect-json';
 

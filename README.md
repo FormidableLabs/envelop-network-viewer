@@ -109,7 +109,7 @@ Then pass the `PrismaObserver` instance in the `additionalObservers` configurati
 const prisma = new PrismaClient()
 
 const useNetworkViewerConfig = {
-    additionalObservers: [new PrismaObserver(prisma)]
+  additionalObservers: [new PrismaObserver(prisma)]
 };
 
 const getEnveloped = envelop({
@@ -131,7 +131,34 @@ Then pass the `SequelizeObserver` instance in the `additionalObservers` configur
 const sequelize = new Sequelize('sqlite::memory:');
 
 const useNetworkViewerConfig = {
-    additionalObservers: [new SequelizeObserver(sequelize)]
+  additionalObservers: [new SequelizeObserver(sequelize)]
+};
+
+const getEnveloped = envelop({
+  plugins: [
+    useNetworkViewer(true, useNetworkViewerConfig)
+  ]
+})
+```
+
+### Knex.js Observer
+If your application uses Knex.js, you'll want to include the `KnexObserver` in your configuration of the plugin. 
+The Knex observer provides observations for your database interactions using the Knex client.
+
+#### Usage
+You'll need to initialize the Knex client and pass it as a parameter when instantiating the `KnexObserver`. 
+Then pass the `KnexObserver` instance in the `additionalObservers` configuration.   
+
+```typescript
+const knex = Knex({
+  client: 'sqlite3',
+  connection: {
+    filename: ':memory:',
+  },
+});
+
+const useNetworkViewerConfig = {
+  additionalObservers: [new KnexObserver(knex)]
 };
 
 const getEnveloped = envelop({
