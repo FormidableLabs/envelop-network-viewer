@@ -22,7 +22,7 @@ describe('prismaObserver/middleware', () => {
       EVENT_PRISMA_QUERY,
       expect.objectContaining({
         ...params,
-        duration_ms: 0,
+        duration_ms: expect.anything(),
       }),
     );
   });
