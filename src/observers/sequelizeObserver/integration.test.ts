@@ -97,15 +97,15 @@ describe('sequelizeObserver/integration', () => {
       ),
     );
     // make sure these do not occur together
-    expect(config.logFunction).toBeCalledWith(
+    expect(config.logFunction).not.toBeCalledWith(
       'useNetworkViewer',
-      expect.not.stringMatching(
+      expect.stringMatching(
         `"sql":"SELECT \`id\`, \`firstName\`, \`lastName\`, \`birthday\`, \`createdAt\`, \`updatedAt\` FROM \`authors\` AS \`author\` WHERE \`author\`.\`id\` = '1';".*"sql":"SELECT \`id\`, \`firstName\`, \`lastName\`, \`birthday\`, \`createdAt\`, \`updatedAt\` FROM \`authors\` AS \`author\`;"`,
       ),
     );
-    expect(config.logFunction).toBeCalledWith(
+    expect(config.logFunction).not.toBeCalledWith(
       'useNetworkViewer',
-      expect.not.stringMatching(
+      expect.stringMatching(
         `"sql":"SELECT \`id\`, \`firstName\`, \`lastName\`, \`birthday\`, \`createdAt\`, \`updatedAt\` FROM \`authors\` AS \`author\`;".*"sql":"SELECT \`id\`, \`firstName\`, \`lastName\`, \`birthday\`, \`createdAt\`, \`updatedAt\` FROM \`authors\` AS \`author\` WHERE \`author\`.\`id\` = '1';"`,
       ),
     );

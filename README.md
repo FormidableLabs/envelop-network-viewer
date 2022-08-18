@@ -167,3 +167,46 @@ const getEnveloped = envelop({
   ]
 })
 ```
+
+### TypeORM Observer
+If your application uses TypeORM, you'll want to include the `TypeORMObserver` in your configuration of the plugin. 
+The TypeORM observer provides observations for your database interactions using the TypeORM datasource.
+
+#### Usage
+You'll need to initialize the TypeORM datasource with `options.logger` set to an instance of `TypeORMObserverLogger`.
+Then pass the instance of the `TypeORMObserverLogger` when instantiating the `TypeORMObserver`. 
+Finally, pass the `TypeORMObserver` instance in the `additionalObservers` configuration.   
+
+```typescript
+const typeOrmObserverLogger = new TypeOrmObserverLogger();
+
+const datasource = new DataSource({
+  type: 'sqlite',
+  database: ':memory:',
+  logger: typeOrmObserverLogger,
+  logging: ['error'], // still respected
+});
+
+const useNetworkViewerConfig = {
+  additionalObservers: [new TypeORMObserver(typeOrmObserverLogger)]
+};
+
+const getEnveloped = envelop({
+  plugins: [
+    useNetworkViewer(true, useNetworkViewerConfig)
+  ]
+})
+```
+
+If you've already configured your datasource with `logger` and `logging` value, you can provide those to `TypeORMObserverLogger` instead. 
+The `TypeORMObserverLogger` will pass all logging to the provided logger.
+
+Example, to use one the built-in file logger to log query errors then you would use the following
+to initialize the `TypeORMObserverLogger`
+
+```typescript 
+const typeOrmObserverLogger = new TypeOrmObserverLogger(
+  "file", /* or any valid DataSourceOptions.logger value */ 
+  ['error'] /* or any valid DataSourceOptions.logging value */)
+);
+```
