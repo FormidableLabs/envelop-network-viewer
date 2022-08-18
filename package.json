@@ -45,9 +45,36 @@
     "graphql": "^16.5.0",
     "knex": "^2.2.0",
     "prisma": "^4.2.1",
+    "reflect-metadata": "^0.1.13",
     "sequelize": "^6.21.3",
     "sqlite3": "^5.0.11",
-    "yarn": "^1.22.19"
+    "typeorm": "^0.3.7"
+  },
+  "peerDependenciesMeta": {
+    "soy-milk": {
+      "optional": true
+    },
+    "@prisma/client": {
+      "optional": true
+    },
+    "knex": {
+      "optional": true
+    },
+    "prisma": {
+      "optional": true
+    },
+    "reflect-metadata": {
+      "optional": true
+    },
+    "sequelize": {
+      "optional": true
+    },
+    "sqlite3": {
+      "optional": true
+    },
+    "typeorm": {
+      "optional": true
+    }
   },
   "scripts": {
     "build": "tsc",
