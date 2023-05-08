@@ -30,17 +30,17 @@ describe('httpObserver', () => {
     ],
     resolvers: {
       Query: {
-        test: async () => request('http://localhost:8883/'),
+        test: async () => request('http://127.0.0.1:8883/'),
         test2: async () => {
           return [
-            await request('http://localhost:8883/foo'),
-            await request('http://localhost:8883/bar'),
+            await request('http://127.0.0.1:8883/foo'),
+            await request('http://127.0.0.1:8883/bar'),
           ];
         },
         test3: async () => {
           return [
-            await request('http://localhost:8883/fiz'),
-            await request('http://localhost:8883/buz'),
+            await request('http://127.0.0.1:8883/fiz'),
+            await request('http://127.0.0.1:8883/buz'),
           ];
         },
       },

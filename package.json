@@ -4,7 +4,7 @@
   "description": "A GraphQL Envelop plugin for providing visibility into your GraphQL operation network activity.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "git@github.com:FormidableLabs/envelop-network-viewer.git",
+  "repository": "https://github.com/FormidableLabs/envelop-network-viewer",
   "author": "Jeremy Giberson <jeremy.giberson@formidable.com>",
   "license": "MIT",
   "devDependencies": {
@@ -34,7 +34,7 @@
     "jest": "^28.1.3",
     "jest-expect-json": "^0.1.1",
     "prettier": "^2.7.1",
-    "semantic-release": "^19.0.3",
+    "semantic-release": "^21.0.2",
     "stubby": "^5.1.0",
     "ts-jest": "^28.0.7",
     "typescript": "^4.7.4"
@@ -75,6 +75,9 @@
     "typeorm": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "provenance": true
   },
   "scripts": {
     "build": "tsc",
