@@ -21,7 +21,9 @@ jobs:
         with:
           node-version: 18
       - run: yarn install
-      - run: yarn prisma generate && yarn test
+      - run: yarn prisma generate
+      - name: Tests
+        run: yarn test
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
