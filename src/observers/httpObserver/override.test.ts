@@ -30,8 +30,8 @@ describe('httpObserver/override', () => {
     [
       'http.request(url)',
       http,
-      ['http://localhost:8882/'],
-      { method: 'GET', port: '8882', host: 'localhost' },
+      ['http://127.0.0.1:8882/'],
+      { method: 'GET', port: '8882', host: '127.0.0.1' },
       { statusCode: 200 },
     ],
     // Can't test url only because we have to provide rejectUnauthorized: false for self sign cert of stub
@@ -44,8 +44,8 @@ describe('httpObserver/override', () => {
     [
       'http.request(options)',
       http,
-      [{ method: 'GET', host: 'localhost', protocol: 'http:', port: '8882', path: '/' }],
-      { method: 'GET', port: '8882', host: 'localhost', path: '/' },
+      [{ method: 'GET', host: '127.0.0.1', protocol: 'http:', port: '8882', path: '/' }],
+      { method: 'GET', port: '8882', host: '127.0.0.1', path: '/' },
       { statusCode: 200 },
     ],
     [
@@ -54,43 +54,43 @@ describe('httpObserver/override', () => {
       [
         {
           method: 'GET',
-          host: 'localhost',
+          host: '127.0.0.1',
           protocol: 'https:',
           port: '7443',
           path: '/',
           rejectUnauthorized: false,
         },
       ],
-      { method: 'GET', port: '7443', host: 'localhost' },
+      { method: 'GET', port: '7443', host: '127.0.0.1' },
       { statusCode: 200 },
     ],
     [
       'http.request(url, options)',
       http,
-      ['http://localhost:8882/', { method: 'OPTIONS' }],
-      { method: 'OPTIONS', port: '8882', host: 'localhost' },
+      ['http://127.0.0.1:8882/', { method: 'OPTIONS' }],
+      { method: 'OPTIONS', port: '8882', host: '127.0.0.1' },
       { statusCode: 200 },
     ],
     [
       'https.request(url, options)',
       https,
-      ['https://localhost:7443/', { method: 'OPTIONS', rejectUnauthorized: false }],
-      { method: 'OPTIONS', port: '7443', host: 'localhost' },
+      ['https://127.0.0.1:7443/', { method: 'OPTIONS', rejectUnauthorized: false }],
+      { method: 'OPTIONS', port: '7443', host: '127.0.0.1' },
       { statusCode: 200 },
     ],
     [
       'http.request(url, options) => 500 response',
       http,
-      ['http://localhost:8882/error', { method: 'OPTIONS' }],
-      { method: 'OPTIONS', port: '8882', host: 'localhost' },
+      ['http://127.0.0.1:8882/error', { method: 'OPTIONS' }],
+      { method: 'OPTIONS', port: '8882', host: '127.0.0.1' },
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       { statusCode: 500 },
     ],
     [
       'https.request(url, options) => 500 response',
       https,
-      ['https://localhost:7443/error', { method: 'OPTIONS', rejectUnauthorized: false }],
-      { method: 'OPTIONS', port: '7443', host: 'localhost' },
+      ['https://127.0.0.1:7443/error', { method: 'OPTIONS', rejectUnauthorized: false }],
+      { method: 'OPTIONS', port: '7443', host: '127.0.0.1' },
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       { statusCode: 500 },
     ],
