@@ -27,9 +27,7 @@ jobs:
       - name: Typescript Build
         run: yarn build
       - run: yarn install
-      - run: yarn prisma generate
-      - name: Tests
-        run: yarn test
+      - run: yarn prisma generate && yarn test
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
