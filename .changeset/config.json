@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": ["../scripts/changelog.js", { "repo": "FormidableLabs/envelop-network-viewer" }],
+  "changelog": ["@svitejs/changesets-changelog-github-compact", { "repo": "FormidableLabs/envelop-network-viewer" }],
   "commit": false,
   "fixed": [],
   "linked": [],
