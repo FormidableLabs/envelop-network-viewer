@@ -6,6 +6,8 @@
   "types": "dist/index.d.ts",
   "repository": "https://github.com/FormidableLabs/envelop-network-viewer",
   "author": "Jeremy Giberson <jeremy.giberson@formidable.com>",
+  "homepage": "https://github.com/FormidableLabs/envelop-network-viewer",
+  "url": "https://github.com/FormidableLabs/envelop-network-viewer",
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
