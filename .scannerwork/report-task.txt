@@ -1,7 +1,0 @@
-organization=formidable
-projectKey=FormidableLabs_envelop-network-viewer
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.40746
-dashboardUrl=https://sonarcloud.io/dashboard?id=FormidableLabs_envelop-network-viewer&branch=main
-ceTaskId=AYgB-SHW33PfldzYvNnF
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AYgB-SHW33PfldzYvNnF
